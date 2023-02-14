@@ -3,7 +3,7 @@ using GXPEngine;                                // GXPEngine contains the engine
 using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
 
 public class MyGame : Game {
-	public MyGame() : base(800, 600, false)     // Create a window that's 800x600 and NOT fullscreen
+	public MyGame() : base(1280, 720, false,true,-1,-1,true)     // Create a window that's 800x600 and NOT fullscreen
 	{
 
 	}
