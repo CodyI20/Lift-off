@@ -8,7 +8,7 @@ using GXPEngine;
 
 public class PlayerData
 {
-    const int _startLives = 100;
+    const int _startLives = 50;
 
     int _lives = 0;
     int _coins = 0; // should be placed in HUD

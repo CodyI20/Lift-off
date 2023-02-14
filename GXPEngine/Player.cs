@@ -6,6 +6,7 @@ class Player : AnimationSprite
 {
     private float initialSpeed = 1f;
     private float playerSpeed = 1f;
+    private float timePlayerGotHit;
     private bool isShooting = false;
     private bool isMoving = false;
     private bool isSprinting = false;
@@ -27,6 +28,8 @@ class Player : AnimationSprite
     void Update()
     {
         if (playerHUD == null) playerHUD = game.FindObjectOfType<HUD>();
+        if (Time.time >= timePlayerGotHit + 300f)
+            SetColor(1f, 1f, 1f);
         Animations();
         Shoot();
         PlayerController();
@@ -42,6 +45,8 @@ class Player : AnimationSprite
 
     public void TakeDamage(int damage)
     {
+        timePlayerGotHit = Time.time;
+        SetColor(0.8f, 0, 0);
         playerData.lives -= damage;
         playerHUD.SetPlayerHealth((float)playerData.lives / playerData.startLives);
         if (playerData.lives <= 0)
