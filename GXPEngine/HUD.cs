@@ -12,7 +12,7 @@ class HUD : GameObject
         playerScore = new EasyDraw(300, 50, false);
         playerScore.TextAlign(CenterMode.Center,CenterMode.Center);
         playerScore.SetXY(150, 20);
-        playerScore.Text("Score: " + ((MyGame)game).playerData.score, 200, 20);
+        playerScore.Text("Score: " + ((MyGame)game).playerData.coins, 200, 20);
         AddChild(playerScore);
         playerAmmoCount = new EasyDraw(300, 50, false);
         playerAmmoCount.TextAlign(CenterMode.Center,CenterMode.Center);

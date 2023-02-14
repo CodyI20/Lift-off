@@ -8,6 +8,8 @@ class Enemy : AnimationSprite
     //private float distanceToDetectPlayer;
     private float distanceToStopFromFollowingPlayer;
     private float distanceToAttackPlayer;
+    private float animationTime;
+    private int coinsAwarded;
     private float enemySpeed;
     private float timeBetweenAttacks;
     private float timeItAttacked;
@@ -16,27 +18,20 @@ class Enemy : AnimationSprite
     private bool enemyIsAttacking = false;
     private float timeOfDeath = -1f;
 
-    private float initialX;
-    private float initialY;
     private Player oPlayer;
     private HUD enemyHUD = null;
 
-    public Enemy(TiledObject obj = null) : base("MinotaurSpriteSheet.png", 9, 10)
+    public Enemy(int enemyMaxHealth, int enemyDamage, float distanceToStopFromFollowingPlayer, float distanceToAttackPlayer, float enemySpeed, float animationTime, int coinsAwarded, float timeBetweenAttacks) : base("MinotaurSpriteSheet.png", 9, 10)
     {
-        if (obj != null)
-        {
-            enemyMaxHealth = obj.GetIntProperty("enemyMaxHealth", 100);
-            enemyDamage = obj.GetIntProperty("enemyDamage", 15);
-            //distanceToDetectPlayer = obj.GetFloatProperty("distanceToDetectPlayer", 150f);
-            distanceToStopFromFollowingPlayer = obj.GetFloatProperty("distanceToStopFromFollowingPlayer", 60f);
-            distanceToAttackPlayer = obj.GetFloatProperty("distanceToAttackPlayer", 50f);
-            enemySpeed = obj.GetFloatProperty("enemySpeed", 1f);
-            //timeUntilResetPosition = obj.GetFloatProperty("timeUntilResetPosition", 1000f);
-            timeBetweenAttacks = obj.GetFloatProperty("timeBetweenAttacks", 1000f);
-        }
+        this.enemyMaxHealth = enemyMaxHealth;
+        this.enemyDamage = enemyDamage;
+        this.distanceToStopFromFollowingPlayer = distanceToStopFromFollowingPlayer;
+        this.distanceToAttackPlayer = distanceToAttackPlayer;
+        this.enemySpeed = enemySpeed;
+        this.animationTime = animationTime;
+        this.coinsAwarded = coinsAwarded;
+        this.timeBetweenAttacks = timeBetweenAttacks;
         //timeWhenItFollows = -timeUntilResetPosition;
-        initialX = obj.X;
-        initialY = obj.Y;
         enemyHealth = enemyMaxHealth;
         SetOrigin(width / 2, height / 2);
         SetScaleXY(scaleModifier);
@@ -114,7 +109,7 @@ class Enemy : AnimationSprite
                 oPlayer.TakeDamage(enemyDamage);
             }
         }
-        if (Time.time >= timeItAttacked + 1000f && enemyIsAttacking)
+        if (Time.time >= timeItAttacked + animationTime && enemyIsAttacking)
         {
             enemyIsAttacking = false;
         }
@@ -128,7 +123,7 @@ class Enemy : AnimationSprite
         {
             Sound enemyDeath = new Sound("EnemyDeathSound.ogg");
             enemyDeath.Play();
-            ((MyGame)game).playerData.score += 100;
+            ((MyGame)game).playerData.coins += 100;
             timeOfDeath = Time.time;
         }
     }

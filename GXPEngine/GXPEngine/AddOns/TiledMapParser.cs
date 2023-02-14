@@ -449,8 +449,21 @@ namespace TiledMapParser
 		public float Rotation = 0;
 		[XmlAttribute("name")]
 		public string Name;
+		// Hotfix because Tiled 1.9 breaks compatibility!:
+		public string Type {
+			get {
+				if (type != null) return type; else return myClass;
+			}
+			set {
+				type = value;
+			}
+		}
 		[XmlAttribute("type")]
-		public string Type;
+		public string type;
+		[XmlAttribute("class")]
+		public string myClass;
+
+
 		[XmlAttribute("width")]		// width in pixels
 		public float Width;
 		[XmlAttribute("height")]	// height in pixels

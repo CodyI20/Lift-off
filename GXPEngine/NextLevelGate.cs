@@ -22,7 +22,7 @@ class NextLevelGate : AnimationSprite
     }
     void Advance()
     {
-        if (((MyGame)game).playerData.score >=scoreToAdvance && HitTest(parent.FindObjectOfType<Player>()) && Input.GetKeyDown(Key.F))
+        if (((MyGame)game).playerData.coins >=scoreToAdvance && HitTest(parent.FindObjectOfType<Player>()) && Input.GetKeyDown(Key.F))
         {
             ((MyGame)game).LoadLevel("EndScreen.tmx");
             Console.WriteLine("Advancing to the next level...");

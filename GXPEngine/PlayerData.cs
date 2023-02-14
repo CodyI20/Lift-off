@@ -11,8 +11,9 @@ public class PlayerData
     const int _startLives = 100;
 
     int _lives = 0;
-    int _score = 0; // should be placed in HUD
+    int _coins = 0; // should be placed in HUD
     int playerAmmo;
+
     public int _playerAmmo
     {
         get { return playerAmmo; }
@@ -26,15 +27,15 @@ public class PlayerData
         }
     }
 
-    public int score
+    public int coins
     {
         get
         {
-            return _score;
+            return _coins;
         }
         set
         {
-            _score = value;
+            _coins = value;
         }
     }
     public int lives

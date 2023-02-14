@@ -35,7 +35,7 @@ class Player : AnimationSprite
 
     void SetScore()
     {
-        playerHUD.SetPlayerScore(playerData.score);
+        playerHUD.SetPlayerScore(playerData.coins);
     }
 
     //Make a new function (what happens to the player when it collides with the enemy in range) & remove the one in Enemy.cs
@@ -106,7 +106,19 @@ class Player : AnimationSprite
     }
     void Animations()
     {
-        
+        if (isShooting)
+        {
+            SetCycle(112, 6);
+        }
+        if (isMoving && !isShooting)
+        {
+            if (isSprinting)
+                SetCycle(9, 4);
+            else
+                SetCycle(34, 4);
+        }
+        else if (!isMoving && !isShooting)
+            SetCycle(0);
         Animate(0.1f);
     }
 

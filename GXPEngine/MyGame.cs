@@ -5,7 +5,7 @@ public class MyGame : Game
 {
     public string startLevel =
     //".tmx";
-    "Menu.tmx";
+    "TestMap.tmx";
     string levelToLoad = null;
     public string currentLevel;
     private SoundChannel backgroundMusicSC;
