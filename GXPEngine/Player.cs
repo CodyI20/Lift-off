@@ -63,7 +63,7 @@ class Player : AnimationSprite
         float oldX = x;
         float oldY = y;
         bool isMovingP = false;
-        Sprint();
+        //Sprint();
         if (Input.GetKey(Key.W) || Input.GetKey(Key.S) || Input.GetKey(Key.A) || Input.GetKey(Key.D))
         {
             isMovingP = true;
@@ -102,23 +102,11 @@ class Player : AnimationSprite
             }
         }
         isMoving = isMovingP;
-        ResetPlayerPosition();
+        //ResetPlayerPosition();
     }
     void Animations()
     {
-        if (isShooting)
-        {
-            SetCycle(112, 6);
-        }
-        if (isMoving && !isShooting)
-        {
-            if (isSprinting)
-                SetCycle(9, 4);
-            else
-                SetCycle(34, 4);
-        }
-        else if (!isMoving && !isShooting)
-            SetCycle(0);
+        
         Animate(0.1f);
     }
 
@@ -133,33 +121,33 @@ class Player : AnimationSprite
             }
         }
     }
-    void ResetPlayerPosition()
-    {
-        if (Input.GetKeyDown(Key.SPACE))
-        {
-            SetXY(game.width / 2, game.height / 2);
-            rotation = 0.0f;
-        }
-    }
+    //void ResetPlayerPosition()
+    //{
+    //    if (Input.GetKeyDown(Key.SPACE))
+    //    {
+    //        SetXY(game.width / 2, game.height / 2);
+    //        rotation = 0.0f;
+    //    }
+    //}
 
-    void Sprint()
-    {
-        bool isSprintingP = false;
+    //void Sprint()
+    //{
+    //    bool isSprintingP = false;
 
-        if (Input.GetKey(Key.LEFT_SHIFT))
-        {
-            isSprintingP = true;
-        }
-        if (isSprintingP)
-        {
-            playerSpeed = initialSpeed + 1.5f;
-        }
-        else
-        {
-            playerSpeed = initialSpeed;
-        }
-        isSprinting = isSprintingP;
-    }
+    //    if (Input.GetKey(Key.LEFT_SHIFT))
+    //    {
+    //        isSprintingP = true;
+    //    }
+    //    if (isSprintingP)
+    //    {
+    //        playerSpeed = initialSpeed + 1.5f;
+    //    }
+    //    else
+    //    {
+    //        playerSpeed = initialSpeed;
+    //    }
+    //    isSprinting = isSprintingP;
+    //}
 
     void Shoot()
     {

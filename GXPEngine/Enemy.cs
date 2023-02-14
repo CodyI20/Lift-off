@@ -5,14 +5,12 @@ class Enemy : AnimationSprite
     private int enemyMaxHealth;
     private int enemyHealth;
     private float scaleModifier = 1f;
-    private float distanceToDetectPlayer;
+    //private float distanceToDetectPlayer;
     private float distanceToStopFromFollowingPlayer;
     private float distanceToAttackPlayer;
     private float enemySpeed;
-    private float timeUntilResetPosition;
     private float timeBetweenAttacks;
     private float timeItAttacked;
-    private float timeWhenItFollows;
     private int enemyDamage;
     private bool enemyIsMoving = false;
     private bool enemyIsAttacking = false;
@@ -29,14 +27,14 @@ class Enemy : AnimationSprite
         {
             enemyMaxHealth = obj.GetIntProperty("enemyMaxHealth", 100);
             enemyDamage = obj.GetIntProperty("enemyDamage", 15);
-            distanceToDetectPlayer = obj.GetFloatProperty("distanceToDetectPlayer", 150f);
+            //distanceToDetectPlayer = obj.GetFloatProperty("distanceToDetectPlayer", 150f);
             distanceToStopFromFollowingPlayer = obj.GetFloatProperty("distanceToStopFromFollowingPlayer", 60f);
             distanceToAttackPlayer = obj.GetFloatProperty("distanceToAttackPlayer", 50f);
             enemySpeed = obj.GetFloatProperty("enemySpeed", 1f);
-            timeUntilResetPosition = obj.GetFloatProperty("timeUntilResetPosition", 1000f);
+            //timeUntilResetPosition = obj.GetFloatProperty("timeUntilResetPosition", 1000f);
             timeBetweenAttacks = obj.GetFloatProperty("timeBetweenAttacks", 1000f);
         }
-        timeWhenItFollows = -timeUntilResetPosition;
+        //timeWhenItFollows = -timeUntilResetPosition;
         initialX = obj.X;
         initialY = obj.Y;
         enemyHealth = enemyMaxHealth;
@@ -58,12 +56,12 @@ class Enemy : AnimationSprite
         }
         EnemyAnimations();
     }
-    private bool WillFollowPlayer() // Function to detect if the player is in the follow range
-    {
-        if (DistanceTo(game.FindObjectOfType(typeof(Player))) <= distanceToDetectPlayer)
-            return true;
-        return false;
-    }
+    //private bool WillFollowPlayer() // Function to detect if the player is in the follow range
+    //{
+    //    if (DistanceTo(game.FindObjectOfType(typeof(Player))) <= distanceToDetectPlayer)
+    //        return true;
+    //    return false;
+    //}
 
     private void EnemyAnimations()
     {
@@ -91,25 +89,16 @@ class Enemy : AnimationSprite
 
     void FollowPlayer() // Function that makes the AI follow the player, as well as flip it accordingly using Mirror and Move.
     {
-        if (WillFollowPlayer())
-        {
-            if (oPlayer.x < x)
-                Mirror(true, _mirrorY);
-            else
-                Mirror(false, _mirrorY);
-            if (DistanceTo(game.FindObjectOfType(typeof(Player))) >= distanceToStopFromFollowingPlayer)
-            {
-                Move(Mathf.Sign(oPlayer.x - x) * enemySpeed, Mathf.Sign(oPlayer.y - y) * enemySpeed);
-                enemyIsMoving = true;
-            }
-            enemyIsMoving = false;
-            timeWhenItFollows = Time.time;
-        }
+        if (oPlayer.x < x)
+            Mirror(true, _mirrorY);
         else
+            Mirror(false, _mirrorY);
+        if (DistanceTo(game.FindObjectOfType(typeof(Player))) >= distanceToStopFromFollowingPlayer)
         {
-            if (Time.time >= timeUntilResetPosition + timeWhenItFollows)
-                ResetEnemyPosition();
+            Move(Mathf.Sign(oPlayer.x - x) * enemySpeed, Mathf.Sign(oPlayer.y - y) * enemySpeed);
+            enemyIsMoving = true;
         }
+        enemyIsMoving = false;
     }
 
     void AttackPlayer()
@@ -144,25 +133,25 @@ class Enemy : AnimationSprite
         }
     }
 
-    void ResetEnemyPosition()
-    {
-        bool hasResetPosition = true;
-        if (x > initialX)
-            Mirror(true, _mirrorY);
-        else
-            Mirror(false, _mirrorY);
-        if (Mathf.Abs(x - initialX) > 0.5f)
-        {
-            Move(Mathf.Sign(x - initialX) * (-enemySpeed), 0);
-            hasResetPosition = false;
-        }
-        if (Mathf.Abs(y - initialY) > 0.5f)
-        {
-            Move(0, Mathf.Sign(y - initialY) * (-enemySpeed));
-            hasResetPosition = false;
-        }
-        if (hasResetPosition)
-            Mirror(false, _mirrorY);
-        enemyHealth = enemyMaxHealth;
-    }
+    //void ResetEnemyPosition()
+    //{
+    //    bool hasResetPosition = true;
+    //    if (x > initialX)
+    //        Mirror(true, _mirrorY);
+    //    else
+    //        Mirror(false, _mirrorY);
+    //    if (Mathf.Abs(x - initialX) > 0.5f)
+    //    {
+    //        Move(Mathf.Sign(x - initialX) * (-enemySpeed), 0);
+    //        hasResetPosition = false;
+    //    }
+    //    if (Mathf.Abs(y - initialY) > 0.5f)
+    //    {
+    //        Move(0, Mathf.Sign(y - initialY) * (-enemySpeed));
+    //        hasResetPosition = false;
+    //    }
+    //    if (hasResetPosition)
+    //        Mirror(false, _mirrorY);
+    //    enemyHealth = enemyMaxHealth;
+    //}
 }
