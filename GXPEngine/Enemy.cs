@@ -84,13 +84,14 @@ class Enemy : AnimationSprite
 
     void FollowPlayer() // Function that makes the AI follow the player, as well as flip it accordingly using Mirror and Move.
     {
+        float deltaSpeed = enemySpeed * Time.deltaTime;
         if (oPlayer.x < x)
             Mirror(true, _mirrorY);
         else
             Mirror(false, _mirrorY);
         if (DistanceTo(game.FindObjectOfType(typeof(Player))) >= distanceToStopFromFollowingPlayer)
         {
-            Move(Mathf.Sign(oPlayer.x - x) * enemySpeed, Mathf.Sign(oPlayer.y - y) * enemySpeed);
+            Move(Mathf.Sign(oPlayer.x - x) * deltaSpeed, Mathf.Sign(oPlayer.y - y) * deltaSpeed);
             enemyIsMoving = true;
         }
         enemyIsMoving = false;

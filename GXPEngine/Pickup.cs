@@ -8,6 +8,7 @@ using TiledMapParser;
 
 class Pickup : AnimationSprite
 {
+    protected Player player;
     public Pickup(string filename, int cols, int rows, TiledLoader obj = null) : base(filename,cols,rows)
     {
         collider.isTrigger= true;
@@ -25,7 +26,10 @@ class Pickup : AnimationSprite
 
     void Update()
     {
-
+        if (player != null)
+        {
+            player = parent.FindObjectOfType<Player>();
+        }
     }
     //create a virtual class for pickups
 

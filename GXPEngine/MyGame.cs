@@ -6,11 +6,12 @@ public class MyGame : Game
     public string startLevel =
     //".tmx";
     "TestMap.tmx";
+    //"Test.tmx";
     string levelToLoad = null;
     public string currentLevel;
     private SoundChannel backgroundMusicSC;
     public readonly PlayerData playerData;
-    public MyGame() : base(800, 600, false, false, -1, -1, true)     // Create a window that's 800x600 and NOT fullscreen
+    public MyGame() : base(1920, 1080, false, false, -1, -1, true)     // Create a window that's 800x600 and NOT fullscreen
     {
         playerData = new PlayerData();
         LoadLevel(startLevel);

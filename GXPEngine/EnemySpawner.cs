@@ -18,6 +18,9 @@ class EnemySpawner : AnimationSprite
     float animationTime;
     int coinsAwarded;
     float timeBetweenAttacks;
+    float timeUntilSpawnSpeedIncreases;
+    float spawnTimeDecreaseValue;
+    float increasedSpeedTime;
     public EnemySpawner(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
     {
         if (obj != null)
@@ -30,14 +33,26 @@ class EnemySpawner : AnimationSprite
             animationTime = obj.GetFloatProperty("animationTime", 1000f);
             coinsAwarded = obj.GetIntProperty("coinsAwarded", 10);
             timeBetweenAttacks = obj.GetFloatProperty("timeBetweenAttacks", 1000f);
-            spawnEnemyTimeInterval = obj.GetFloatProperty("spawnInterval", 1000f);
-            timeItSpawned = -spawnEnemyTimeInterval;
+            spawnEnemyTimeInterval = obj.GetFloatProperty("spawnEnemyTimeInterval", 1000f);
+            timeUntilSpawnSpeedIncreases = obj.GetFloatProperty("timeUntilSpawnSpeedIncreases", 1000f);
+            spawnTimeDecreaseValue = obj.GetFloatProperty("spawnTimeDecreaseValue", 1000f);
         }
+        timeItSpawned = -spawnEnemyTimeInterval;
     }
 
     void Update()
     {
-        if(Time.time>=spawnEnemyTimeInterval + timeItSpawned)
+        SpawnChecker();
+    }
+
+    void SpawnChecker()
+    {
+        if (Time.time >= timeUntilSpawnSpeedIncreases + increasedSpeedTime)
+        {
+            spawnEnemyTimeInterval -= spawnTimeDecreaseValue;
+            increasedSpeedTime = Time.time;
+        }
+        if (Time.time >= spawnEnemyTimeInterval + timeItSpawned)
         {
             SpawnEnemy();
         }
@@ -48,6 +63,7 @@ class EnemySpawner : AnimationSprite
         Enemy enemy = new Enemy(enemyMaxHealth,enemyDamage,distanceToStopFromFollowingPlayer,distanceToAttackPlayer,enemySpeed,animationTime,coinsAwarded,timeBetweenAttacks);
         enemy.SetXY(x, y);
         parent.AddChild(enemy);
+        Console.WriteLine("Enemy Spawned. Interval = {0}",spawnEnemyTimeInterval);
         timeItSpawned = Time.time;
     }
 

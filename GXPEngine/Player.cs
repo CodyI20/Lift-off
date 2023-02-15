@@ -68,6 +68,7 @@ class Player : AnimationSprite
         float oldX = x;
         float oldY = y;
         bool isMovingP = false;
+        float speedOnDelta = playerSpeed * Time.deltaTime;
         //Sprint();
         if (Input.GetKey(Key.W) || Input.GetKey(Key.S) || Input.GetKey(Key.A) || Input.GetKey(Key.D))
         {
@@ -77,23 +78,23 @@ class Player : AnimationSprite
         if (Input.GetKey(Key.W))
         {
             Mirror(_mirrorX, false);
-            Move(0, -playerSpeed);
+            Move(0, -speedOnDelta);
         }
         if (Input.GetKey(Key.S))
         {
-            Move(0, playerSpeed);
+            Move(0, speedOnDelta);
             Mirror(_mirrorX, false);
 
         }
         if (Input.GetKey(Key.A))
         {
-            Move(-playerSpeed, 0);
+            Move(-speedOnDelta, 0);
             if (!isShooting)
                 Mirror(true, _mirrorY);
         }
         if (Input.GetKey(Key.D))
         {
-            Move(playerSpeed, 0);
+            Move(speedOnDelta, 0);
             if (!isShooting)
                 Mirror(false, _mirrorY);
         }
