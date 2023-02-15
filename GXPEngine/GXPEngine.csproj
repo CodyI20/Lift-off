@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtomicBullet.cs" />
     <Compile Include="AttackBonus.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="Bullet.cs" />

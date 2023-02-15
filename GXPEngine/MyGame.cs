@@ -11,7 +11,7 @@ public class MyGame : Game
     public string currentLevel;
     private SoundChannel backgroundMusicSC;
     public readonly PlayerData playerData;
-    public MyGame() : base(1920, 1080, false, false, -1, -1, true)     // Create a window that's 800x600 and NOT fullscreen
+    public MyGame() : base(1920, 1080, false, false, -1, -1, true)     // Create a window
     {
         playerData = new PlayerData();
         LoadLevel(startLevel);

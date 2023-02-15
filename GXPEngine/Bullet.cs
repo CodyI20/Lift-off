@@ -1,36 +1,36 @@
 ﻿using GXPEngine;
 using System;
+using System.Drawing.Drawing2D;
 using TiledMapParser;
 
 class Bullet : Sprite
 {
     private float vx, vy;
-    private Level level;
-    private int bulletDamage = 40;
+    protected Level level;
+    private int bulletDamage;
 
-    GameObject owner;
-    public Bullet(float pVx, float pVy, GameObject pOwner, float pRotation, TiledObject obj=null) : base("arrow.png")
+    public Bullet(string filename, float pVx, float pVy, float pRotation, int bulletDamage) : base(filename)
     {
         level = game.FindObjectOfType<Level>();
         SetOrigin(width / 2, height / 2);
         vx = pVx;
         vy = pVy;
-        owner = pOwner;
         rotation = pRotation;
+        this.bulletDamage = bulletDamage;
     }
-    void Move()
+    protected void Move()
     {
         x += vx;
         y += vy;
     }
-    void checkOffScreen()
+    protected void checkOffScreen()
     {
         if (x + level.x > game.width || x + level.x < 0 || y + level.y < 0 || y + level.y > game.height)
         {
             LateDestroy();
         }
     }
-    void enemyCollisionCheck()
+    virtual protected void enemyCollisionCheck(int pBulletDamage)
     {
         GameObject[] enemyHit = GetCollisions();
         for (int i = 0; i < enemyHit.Length; i++)
@@ -38,12 +38,12 @@ class Bullet : Sprite
             if (enemyHit[i] is Enemy)
             {
                 Enemy enemy1 = (Enemy)enemyHit[i];
-                enemy1.DamageEnemy(bulletDamage);
+                enemy1.DamageEnemy(pBulletDamage);
                 DestroyArrow();
             }
         }
     }
-    void DestroyArrow()
+    protected void DestroyArrow()
     {
         Sound arrowHit = new Sound("ArrowImpact.ogg");
         arrowHit.Play();
@@ -52,7 +52,7 @@ class Bullet : Sprite
     void Update()
     {
         Move();
-        enemyCollisionCheck();
+        enemyCollisionCheck(bulletDamage);
         checkOffScreen();
     }
 }
