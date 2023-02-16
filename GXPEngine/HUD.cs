@@ -3,12 +3,14 @@ using System.Drawing;
 
 class HUD : GameObject
 {
+    int healthBarX;
     EasyDraw playerHealthBar;
     //EasyDraw playerAmmoCount;
     EasyDraw playerScore;
 
     public HUD() : base(false)
     {
+        healthBarX = 270;
         playerScore = new EasyDraw(300, 50, false);
         playerScore.TextAlign(CenterMode.Center,CenterMode.Center);
         playerScore.SetXY(150, 20);
@@ -19,7 +21,7 @@ class HUD : GameObject
         //playerAmmoCount.SetXY(50, 20);
         //playerAmmoCount.Text("Ammo: " + ((MyGame)game).playerData._playerAmmo, 50, 20);
         //AddChild(playerAmmoCount);
-        playerHealthBar = new EasyDraw(270, 40, false);
+        playerHealthBar = new EasyDraw(healthBarX, 40, false);
         playerHealthBar.ShapeAlign(CenterMode.Min, CenterMode.Min);
         playerHealthBar.Stroke(0, 155);
         playerHealthBar.Fill(Color.Green);
@@ -30,8 +32,10 @@ class HUD : GameObject
 
     public void SetPlayerHealth(float health) //health has to be a float number between 0 and 1
     {
+        //playerHealthBar = new EasyDraw((int)(healthBarX * health), 40, false);
         playerHealthBar.Clear(Color.Red);
         playerHealthBar.Fill(Color.Green);
+        //AddChild(playerHealthBar);
         playerHealthBar.Rect(0, 0, playerHealthBar.width * health, playerHealthBar.height);
     }
     //public void SetPlayerAmmo(int ammo)

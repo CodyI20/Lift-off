@@ -1,5 +1,4 @@
 ﻿using GXPEngine;
-using GXPEngine.Core;
 using TiledMapParser;
 
 class Player : AnimationSprite
@@ -171,10 +170,13 @@ class Player : AnimationSprite
 
     void Shoot()
     {
-        if (Input.mouseX < x + game.FindObjectOfType<Level>().x)
-            _mirrorX = true;
-        else
-            _mirrorX = false;
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {
+            if (Input.mouseX < x + game.FindObjectOfType<Level>().x)
+                _mirrorX = true;
+            else
+                _mirrorX = false;
+        }
         if (Input.GetMouseButtonDown(0) && !isShooting)
         {
             Sound arrowShot = new Sound("BowDrawn_ArrowRelease.ogg");
@@ -185,7 +187,7 @@ class Player : AnimationSprite
             bullet.SetXY(x + (_mirrorX ? -1 : 1) * (width / 2), y);
             parent.AddChild(bullet);
         }
-        if(Input.GetMouseButtonDown(1) && !isShooting)
+        if (Input.GetMouseButtonDown(1) && !isShooting)
         {
             shotTime = Time.time;
             isShooting = true;

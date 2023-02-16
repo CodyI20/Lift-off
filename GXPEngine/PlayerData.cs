@@ -1,5 +1,5 @@
 ﻿using System;
-
+using GXPEngine;
 public class PlayerData
 {
     const int _startLives = 50;

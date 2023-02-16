@@ -4,14 +4,15 @@ using System.Collections.Generic;
 public class MyGame : Game
 {
     public string startLevel =
+    "MainMenu.tmx";
     //".tmx";
-    "TestMap.tmx";
+    //"TestMap.tmx";
     //"Test.tmx";
     string levelToLoad = null;
     public string currentLevel;
     private SoundChannel backgroundMusicSC;
     public readonly PlayerData playerData;
-    public MyGame() : base(1920, 1080, false, false, -1, -1, true)     // Create a window
+    public MyGame() : base(1280, 720, false, false, -1, -1, true)     // Create a window
     {
         playerData = new PlayerData();
         LoadLevel(startLevel);
@@ -31,7 +32,7 @@ public class MyGame : Game
         {
             DestroyAll();
             AddChild(new Level(levelToLoad));
-            if (levelToLoad != "EndScreen.tmx")
+            if (levelToLoad != "EndScreen.tmx" && levelToLoad != "MainMenu.tmx")
                 AddChild(new HUD());
             levelToLoad = null;
         }

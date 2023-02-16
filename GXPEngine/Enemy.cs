@@ -23,7 +23,7 @@ class Enemy : AnimationSprite
     private Player oPlayer;
     private HUD enemyHUD = null;
 
-    public Enemy(int enemyMaxHealth, int enemyDamage, float distanceToStopFromFollowingPlayer, float distanceToAttackPlayer, float enemySpeed, float animationTime, int coinsAwarded, float timeBetweenAttacks) : base("MinotaurSpriteSheet.png", 9, 10)
+    public Enemy(int enemyMaxHealth, int enemyDamage, float distanceToStopFromFollowingPlayer, float distanceToAttackPlayer, float enemySpeed, float animationTime, int coinsAwarded, float timeBetweenAttacks) : base("Enemy.png", 3, 3)
     {
         this.enemyMaxHealth = enemyMaxHealth;
         this.enemyDamage = enemyDamage;
@@ -70,18 +70,18 @@ class Enemy : AnimationSprite
         {
             if (enemyIsAttacking)
             {
-                SetCycle(27, 7);
+                SetCycle(0, 8);
             }
             if (enemyIsMoving && !enemyIsAttacking)
             {
-                SetCycle(9, 8);
+                SetCycle(0, 8);
             }
             else if (!enemyIsMoving && !enemyIsAttacking)
-                SetCycle(0, 5);
+                SetCycle(0, 8);
         }
         else
         {
-            SetCycle(81, 6);
+            SetCycle(0, 8);
             if (Time.time >= timeOfDeath + 900f)
                 LateDestroy();
         }
