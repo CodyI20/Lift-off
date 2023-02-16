@@ -10,6 +10,7 @@ using TiledMapParser;
 class Solid : Sprite
 {
     public Solid(TiledObject obj=null) : base("empty.png") {
+        visible = false;
         //A game object that has a collider which doesn't allow passing through
     }
 }

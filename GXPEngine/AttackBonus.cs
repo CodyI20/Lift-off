@@ -17,9 +17,18 @@ class AttackBonus : Pickup
         }
     }
 
+    void Update()
+    {
+        if (HitTest(parent.FindObjectOfType<Player>()))
+        {
+            GrabPickUP();
+        }
+    }
+
     protected override void GrabPickUP(string SoundFile = null)
     {
-        //player.
+        ((MyGame)game).playerData.playerDamage += attackIncreaseValue;
+        Console.WriteLine("Damage = {0}", ((MyGame)game).playerData.playerDamage);
         base.GrabPickUP(SoundFile);
     }
 }

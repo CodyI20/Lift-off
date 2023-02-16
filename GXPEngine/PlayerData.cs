@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using GXPEngine;
 
 public class PlayerData
 {
@@ -12,6 +6,7 @@ public class PlayerData
 
     int _lives = 0;
     int _coins = 0; // should be placed in HUD
+    int _playerDamage = 15;
     //int playerAmmo;
 
     //public int _playerAmmo
@@ -19,6 +14,12 @@ public class PlayerData
     //    get { return playerAmmo; }
     //    set { playerAmmo = value; }
     //}
+
+    public int playerDamage
+    {
+        get { return _playerDamage; }
+        set { _playerDamage = value; }
+    }
     public int startLives
     {
         get
