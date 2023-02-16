@@ -5,7 +5,7 @@ using TiledMapParser;
 
 class Bullet : Sprite
 {
-    private float vx, vy;
+    protected float vx, vy;
     protected Level level;
     private int bulletDamage;
 

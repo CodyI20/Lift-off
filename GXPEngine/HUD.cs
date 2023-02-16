@@ -4,7 +4,7 @@ using System.Drawing;
 class HUD : GameObject
 {
     EasyDraw playerHealthBar;
-    EasyDraw playerAmmoCount;
+    //EasyDraw playerAmmoCount;
     EasyDraw playerScore;
 
     public HUD() : base(false)
@@ -14,11 +14,11 @@ class HUD : GameObject
         playerScore.SetXY(150, 20);
         playerScore.Text("Score: " + ((MyGame)game).playerData.coins, 200, 20);
         AddChild(playerScore);
-        playerAmmoCount = new EasyDraw(300, 50, false);
-        playerAmmoCount.TextAlign(CenterMode.Center,CenterMode.Center);
-        playerAmmoCount.SetXY(50, 20);
-        playerAmmoCount.Text("Ammo: " + ((MyGame)game).playerData._playerAmmo, 50, 20);
-        AddChild(playerAmmoCount);
+        //playerAmmoCount = new EasyDraw(300, 50, false);
+        //playerAmmoCount.TextAlign(CenterMode.Center,CenterMode.Center);
+        //playerAmmoCount.SetXY(50, 20);
+        //playerAmmoCount.Text("Ammo: " + ((MyGame)game).playerData._playerAmmo, 50, 20);
+        //AddChild(playerAmmoCount);
         playerHealthBar = new EasyDraw(270, 40, false);
         playerHealthBar.ShapeAlign(CenterMode.Min, CenterMode.Min);
         playerHealthBar.Stroke(0, 155);
@@ -34,11 +34,11 @@ class HUD : GameObject
         playerHealthBar.Fill(Color.Green);
         playerHealthBar.Rect(0, 0, playerHealthBar.width * health, playerHealthBar.height);
     }
-    public void SetPlayerAmmo(int ammo)
-    {
-        playerAmmoCount.ClearTransparent();
-        playerAmmoCount.Text("Ammo: "+ammo,50,20);
-    }
+    //public void SetPlayerAmmo(int ammo)
+    //{
+    //    playerAmmoCount.ClearTransparent();
+    //    playerAmmoCount.Text("Ammo: "+ammo,50,20);
+    //}
 
     public void SetPlayerScore(int score)
     {

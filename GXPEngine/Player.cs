@@ -23,7 +23,7 @@ class Player : AnimationSprite
         {
             initialSpeed = obj.GetFloatProperty("initialSpeed", 1f);
             playerSpeed = obj.GetFloatProperty("playerSpeed", 1f);
-            playerData._playerAmmo = obj.GetIntProperty("playerAmmo", 20);
+            //playerData._playerAmmo = obj.GetIntProperty("playerAmmo", 20);
             baseBulletDamage = obj.GetIntProperty("baseBulletDamage", 10);
         }
     }
@@ -171,7 +171,11 @@ class Player : AnimationSprite
 
     void Shoot()
     {
-        if (Input.GetMouseButtonDown(0) && !isShooting && playerData._playerAmmo > 0)
+        if (Input.mouseX < x + game.FindObjectOfType<Level>().x)
+            _mirrorX = true;
+        else
+            _mirrorX = false;
+        if (Input.GetMouseButtonDown(0) && !isShooting)
         {
             Sound arrowShot = new Sound("BowDrawn_ArrowRelease.ogg");
             arrowShot.Play();
@@ -181,7 +185,7 @@ class Player : AnimationSprite
             bullet.SetXY(x + (_mirrorX ? -1 : 1) * (width / 2), y);
             parent.AddChild(bullet);
         }
-        if(Input.GetMouseButtonDown(1) && !isShooting && playerData._playerAmmo > 0)
+        if(Input.GetMouseButtonDown(1) && !isShooting)
         {
             shotTime = Time.time;
             isShooting = true;
@@ -198,8 +202,8 @@ class Player : AnimationSprite
         }
         if (Time.time >= shotTime + 1000f && isShooting)
         {
-            playerData._playerAmmo--;
-            playerHUD.SetPlayerAmmo(playerData._playerAmmo);
+            //playerData._playerAmmo--;
+            //playerHUD.SetPlayerAmmo(playerData._playerAmmo);
             isShooting = false;
             //Bullet bullet = new Bullet("arrow.png",_mirrorX ? -5 : 5, 0, _mirrorX ? 180 : 0, baseBulletDamage);
             //bullet.SetXY(x + (_mirrorX ? -1 : 1) * (width / 2), y);

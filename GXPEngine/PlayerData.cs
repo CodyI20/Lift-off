@@ -12,13 +12,13 @@ public class PlayerData
 
     int _lives = 0;
     int _coins = 0; // should be placed in HUD
-    int playerAmmo;
+    //int playerAmmo;
 
-    public int _playerAmmo
-    {
-        get { return playerAmmo; }
-        set { playerAmmo = value; }
-    }
+    //public int _playerAmmo
+    //{
+    //    get { return playerAmmo; }
+    //    set { playerAmmo = value; }
+    //}
     public int startLives
     {
         get

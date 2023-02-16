@@ -7,9 +7,9 @@ using GXPEngine;
 using GXPEngine.Core;
 using TiledMapParser;
 
-class Solid : AnimationSprite
+class Solid : Sprite
 {
-    public Solid(string filename, int cols, int rows, TiledObject obj=null) : base(filename, cols, rows) {
+    public Solid(TiledObject obj=null) : base("empty.png") {
         //A game object that has a collider which doesn't allow passing through
     }
 }

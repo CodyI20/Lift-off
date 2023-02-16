@@ -1,4 +1,5 @@
 ﻿using GXPEngine;
+using System.Drawing;
 using TiledMapParser;
 class Enemy : AnimationSprite
 {
@@ -16,6 +17,7 @@ class Enemy : AnimationSprite
     private int enemyDamage;
     private bool enemyIsMoving = false;
     private bool enemyIsAttacking = false;
+    private float timeEnemyGotHit;
     private float timeOfDeath = -1f;
 
     private Player oPlayer;
@@ -39,6 +41,10 @@ class Enemy : AnimationSprite
     }
     void Update()
     {
+        if(Time.time >= 300f + timeEnemyGotHit)
+        {
+            SetColor(1f, 1f, 1f);
+        }
         if (oPlayer == null)
         {
             oPlayer = parent.FindObjectOfType<Player>();
@@ -119,6 +125,8 @@ class Enemy : AnimationSprite
 
     public void DamageEnemy(int damage)
     {
+        timeEnemyGotHit = Time.time;
+        SetColor(0.3f,0f,0f);
         enemyHealth -= damage; // The enemy will be able to die only when in combat with you (unless you one-shot). This is due to ResetEnemyPosition() being called whenever the player is not in range to be followed. This prevents the player from killing the enemy without being chased(again, unless he one shots it).
         if (enemyHealth <= 0)
         {
