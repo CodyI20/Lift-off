@@ -15,9 +15,12 @@ class AtomicBullet : Bullet
     }
     void Update()
     {
-        enemyCollisionCheck(bulletDamage);
-        Move();
-        checkOffScreen();
+        if (!((MyGame)game).gameIsPaused)
+        {
+            enemyCollisionCheck(bulletDamage);
+            Move();
+            checkOffScreen();
+        }
     }
     protected override void enemyCollisionCheck(int pBulletDamage)
     {

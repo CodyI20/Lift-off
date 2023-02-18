@@ -42,12 +42,13 @@ class EnemySpawner : AnimationSprite
 
     void Update()
     {
-        SpawnChecker();
+        if (!((MyGame)game).gameIsPaused)
+            SpawnChecker();
     }
 
     void SpawnChecker()
     {
-        if (Time.time >= timeUntilSpawnSpeedIncreases + increasedSpeedTime)
+        if (Time.time >= timeUntilSpawnSpeedIncreases + increasedSpeedTime && spawnEnemyTimeInterval - spawnTimeDecreaseValue>=1000)
         {
             spawnEnemyTimeInterval -= spawnTimeDecreaseValue;
             increasedSpeedTime = Time.time;

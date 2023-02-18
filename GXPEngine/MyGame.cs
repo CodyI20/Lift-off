@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class MyGame : Game
 {
+    public bool gameIsPaused = false;
     public string startLevel =
     "MainMenu.tmx";
     //".tmx";
@@ -47,6 +48,13 @@ public class MyGame : Game
         currentLevel = filename;
     }
 
+    void PauseGameSwitch()
+    {
+        if(Input.GetKeyDown(Key.F)) {
+            gameIsPaused = !gameIsPaused;
+        }
+    }
+
     public void ResetCurrentLevel()
     {
         DestroyAll();
@@ -57,7 +65,7 @@ public class MyGame : Game
     // For every game object, Update is called every frame, by the engine:
     void Update()
     {
-
+        PauseGameSwitch();
     }
 
     static void Main()                          // Main() is the first method that's called when the program is run

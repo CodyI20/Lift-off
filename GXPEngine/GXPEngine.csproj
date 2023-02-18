@@ -92,6 +92,7 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="NextLevelGate.cs" />
     <Compile Include="Pickup.cs" />
+    <Compile Include="PlayButton.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerData.cs" />
     <Compile Include="Solid.cs" />

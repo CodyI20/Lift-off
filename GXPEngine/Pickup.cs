@@ -31,6 +31,4 @@ class Pickup : AnimationSprite
             player = parent.FindObjectOfType<Player>();
         }
     }
-    //create a virtual class for pickups
-
 }

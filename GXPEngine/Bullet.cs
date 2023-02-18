@@ -51,9 +51,12 @@ class Bullet : Sprite
     }
     void Update()
     {
-        Move();
-        enemyCollisionCheck(bulletDamage);
-        checkOffScreen();
+        if (!((MyGame)game).gameIsPaused)
+        {
+            Move();
+            enemyCollisionCheck(bulletDamage);
+            checkOffScreen();
+        }
     }
 }
 

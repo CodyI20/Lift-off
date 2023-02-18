@@ -41,21 +41,24 @@ class Enemy : AnimationSprite
     }
     void Update()
     {
-        if(Time.time >= 300f + timeEnemyGotHit)
+        if (!((MyGame)game).gameIsPaused)
         {
-            SetColor(1f, 1f, 1f);
+            if (Time.time >= 300f + timeEnemyGotHit)
+            {
+                SetColor(1f, 1f, 1f);
+            }
+            if (oPlayer == null)
+            {
+                oPlayer = parent.FindObjectOfType<Player>();
+            }
+            if (enemyHUD == null) enemyHUD = game.FindObjectOfType<HUD>();
+            if (timeOfDeath == -1f)
+            {
+                FollowPlayer();
+                AttackPlayer();
+            }
+            EnemyAnimations();
         }
-        if (oPlayer == null)
-        {
-            oPlayer = parent.FindObjectOfType<Player>();
-        }
-        if (enemyHUD == null) enemyHUD = game.FindObjectOfType<HUD>();
-        if (timeOfDeath == -1f)
-        {
-            FollowPlayer();
-            AttackPlayer();
-        }
-        EnemyAnimations();
     }
     //private bool WillFollowPlayer() // Function to detect if the player is in the follow range
     //{
@@ -97,7 +100,7 @@ class Enemy : AnimationSprite
             Mirror(false, _mirrorY);
         if (DistanceTo(game.FindObjectOfType(typeof(Player))) >= distanceToStopFromFollowingPlayer)
         {
-            Move(Mathf.Sign(oPlayer.x - x) * deltaSpeed, Mathf.Sign(oPlayer.y - y) * deltaSpeed);
+            Move(Mathf.Sign(oPlayer.x - x) * deltaSpeed, Mathf.Sign(oPlayer.y - y) * deltaSpeed/2);
             enemyIsMoving = true;
         }
         enemyIsMoving = false;

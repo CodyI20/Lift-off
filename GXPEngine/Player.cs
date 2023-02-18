@@ -16,6 +16,10 @@ class Player : AnimationSprite
 
     public Player(TiledObject obj) : base("Adventurer_2.0.png", 7, 18)
     {
+        Sprite vig = new Sprite("Vignette.png");
+        vig.SetOrigin(vig.width / 2, vig.height / 2);
+        vig.SetXY(x, y);
+        AddChild(vig);
         SetXY(game.width / 2, game.height / 2);
         playerData = ((MyGame)game).playerData;
         if (obj != null)
@@ -28,13 +32,16 @@ class Player : AnimationSprite
     }
     void Update()
     {
-        if (playerHUD == null) playerHUD = game.FindObjectOfType<HUD>();
-        if (Time.time >= timePlayerGotHit + 300f)
-            SetColor(1f, 1f, 1f);
-        Animations();
-        Shoot();
-        PlayerController();
-        SetScore();
+        if (!((MyGame)game).gameIsPaused)
+        {
+            if (playerHUD == null) playerHUD = game.FindObjectOfType<HUD>();
+            if (Time.time >= timePlayerGotHit + 300f)
+                SetColor(1f, 1f, 1f);
+            Animations();
+            Shoot();
+            PlayerController();
+            SetScore();
+        }
     }
 
     void SetScore()

@@ -8,28 +8,27 @@ using TiledMapParser;
 
 class Button : AnimationSprite
 {
-    //Sprite visualButton;
-    string loadFilename;
-
-    public Button(string filename, int cols, int rows, TiledObject obj) : base(filename, cols, rows)
+    public Button(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
     {
-        //this.visualButton = visualButton;
-        loadFilename = obj.GetStringProperty("load", "RPGMap");
+        
     }
 
-    void Update()
+    protected void ButtonFunctionality()
     {
         if (this.HitTestPoint(Input.mouseX, Input.mouseY))
         {
             this.SetColor(1, 1, 1);
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
-                ((MyGame)game).LoadLevel(loadFilename + ".tmx");
+                DoSomething();
             }
         }
         else
         {
             this.SetColor(0.7f, 0.7f, 0.7f);
         }
+    }
+    protected virtual void DoSomething()
+    {
     }
 }

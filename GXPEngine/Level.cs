@@ -10,6 +10,10 @@ class Level : GameObject
     string currentLevelName;
     public Level(string filename)
     {
+        //Sprite vig = new Sprite("Vignette.png");
+        //vig.SetOrigin(vig.width / 2, vig.height / 2);
+        //vig.SetXY(x, y);
+        //AddChild(vig);
         currentLevelName = filename;
         loader = new TiledLoader(filename);
         CreateLevel();
@@ -61,14 +65,15 @@ class Level : GameObject
     }
     void Scrolling()
     {
-        int boundries = 128;  //The screen boudries for scrolling
-        if (player.x + x > game.width - boundries)
-            x = (game.width - boundries) - player.x;
-        if (player.x + x < boundries)
-            x = boundries - player.x;
-        if (player.y + y > game.height - boundries)
-            y = (game.height - boundries) - player.y;
-        if (player.y + y < boundries)
-            y = boundries - player.y;
+        int boundriesX = game.width/2;
+        int boundriesY = game.height/2; //The screen boudries for scrolling
+        if (player.x + x > game.width - boundriesX)
+            x = (game.width - boundriesX) - player.x;
+        if (player.x + x < boundriesX)
+            x = boundriesX - player.x;
+        if (player.y + y > game.height - boundriesY)
+            y = (game.height - boundriesY) - player.y;
+        if (player.y + y < boundriesY)
+            y = boundriesY - player.y;
     }
 }

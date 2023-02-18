@@ -1,8 +1,11 @@
 ﻿using GXPEngine;
+using System;
 using System.Drawing;
 
 class HUD : GameObject
 {
+    private Sprite buyMenuBackground;
+    private Button[] optionButton;
     int healthBarX;
     EasyDraw playerHealthBar;
     //EasyDraw playerAmmoCount;
@@ -28,6 +31,18 @@ class HUD : GameObject
         playerHealthBar.Rect(0, 0, 270, 40);
         playerHealthBar.SetXY(game.width - 270, 20);
         AddChild(playerHealthBar);
+        buyMenuBackground = new Sprite("Vignette.png", false, false);
+    }
+
+    void SetupBuyButtons()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == 0)
+            {
+
+            }
+        }
     }
 
     public void SetPlayerHealth(float health) //health has to be a float number between 0 and 1
@@ -48,6 +63,30 @@ class HUD : GameObject
     {
         playerScore.ClearTransparent();
         playerScore.Text("Score: " + score, 200, 20);
+    }
+
+    void BuyMenu()
+    {
+        if (((MyGame)game).gameIsPaused)
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                optionButton[i].width = 100;
+                optionButton[i].height = 30;
+                optionButton[i].SetXY(game.width / 2, game.height * (i + 1) / 2);
+                AddChild(optionButton[i]);
+            }
+            AddChild(buyMenuBackground);
+        }
+        else
+        {
+            RemoveChild(buyMenuBackground);
+        }
+    }
+
+    void Update()
+    {
+        BuyMenu();
     }
     //public void SetEnemyHealth(AnimationSprite owner, float health, bool hasAddedChild = false)
     //{
