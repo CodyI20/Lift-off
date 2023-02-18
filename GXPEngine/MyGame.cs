@@ -1,5 +1,6 @@
 using GXPEngine;                                // GXPEngine contains the engine
 using System.Collections.Generic;
+using System;
 
 public class MyGame : Game
 {
@@ -10,7 +11,7 @@ public class MyGame : Game
     //"TestMap.tmx";
     //"Test.tmx";
     string levelToLoad = null;
-    public string currentLevel;
+    string currentLevel;
     private SoundChannel backgroundMusicSC;
     public readonly PlayerData playerData;
     public MyGame() : base(1280, 720, false, false, -1, -1, true)     // Create a window
@@ -33,7 +34,7 @@ public class MyGame : Game
         {
             DestroyAll();
             AddChild(new Level(levelToLoad));
-            if (levelToLoad != "EndScreen.tmx" && levelToLoad != "MainMenu.tmx")
+            if (levelToLoad != "MainMenu.tmx")
                 AddChild(new HUD());
             levelToLoad = null;
         }
@@ -50,7 +51,8 @@ public class MyGame : Game
 
     void PauseGameSwitch()
     {
-        if(Input.GetKeyDown(Key.F)) {
+        if (levelToLoad != "MainMenu.tmx" && Input.GetKeyDown(Key.F))
+        {
             gameIsPaused = !gameIsPaused;
         }
     }

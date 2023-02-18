@@ -45,6 +45,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="BuyButton.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="EnemySpawner.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />

@@ -5,7 +5,7 @@ using System.Drawing;
 class HUD : GameObject
 {
     private Sprite buyMenuBackground;
-    private Button[] optionButton;
+    private BuyButton[] optionButton;
     int healthBarX;
     EasyDraw playerHealthBar;
     //EasyDraw playerAmmoCount;
@@ -32,17 +32,17 @@ class HUD : GameObject
         playerHealthBar.SetXY(game.width - 270, 20);
         AddChild(playerHealthBar);
         buyMenuBackground = new Sprite("Vignette.png", false, false);
+        optionButton = new BuyButton[5]; 
+        SetupBuyButtons();
     }
 
     void SetupBuyButtons()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            if (i == 0)
-            {
-
-            }
-        }
+        optionButton[0] = new BuyButton("square.png", 1, 1);
+        optionButton[1] = new BuyButton("colors.png", 1, 1);
+        optionButton[2] = new BuyButton("circle.png", 1, 1);
+        optionButton[3] = new BuyButton("triangle.png", 1, 1);
+        optionButton[4] = new BuyButton("arrow.png", 1, 1);
     }
 
     public void SetPlayerHealth(float health) //health has to be a float number between 0 and 1
@@ -73,13 +73,17 @@ class HUD : GameObject
             {
                 optionButton[i].width = 100;
                 optionButton[i].height = 30;
-                optionButton[i].SetXY(game.width / 2, game.height * (i + 1) / 2);
+                optionButton[i].SetXY(game.width / 2, (i+1) * 200);
                 AddChild(optionButton[i]);
             }
             AddChild(buyMenuBackground);
         }
         else
         {
+            for(int i = 2; i >= 0; i--)
+            {
+                RemoveChild(optionButton[i]);
+            }
             RemoveChild(buyMenuBackground);
         }
     }
