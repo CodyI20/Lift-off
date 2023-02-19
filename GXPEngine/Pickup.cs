@@ -25,6 +25,10 @@ class Pickup : AnimationSprite
             DoSomething();
             LateDestroy();
         }
+        else
+        {
+            return;
+        }
     }
 
     protected virtual void DoSomething()

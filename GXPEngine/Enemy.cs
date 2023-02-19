@@ -19,6 +19,7 @@ class Enemy : AnimationSprite
     private bool enemyIsAttacking = false;
     private float timeEnemyGotHit;
     private float timeOfDeath = -1f;
+    private bool hasFoundPlayer = false;
 
     private Player oPlayer;
     private HUD enemyHUD = null;
@@ -47,10 +48,12 @@ class Enemy : AnimationSprite
             {
                 SetColor(1f, 1f, 1f);
             }
-            if (oPlayer == null)
+            if (!hasFoundPlayer && oPlayer == null)
             {
                 oPlayer = parent.FindObjectOfType<Player>();
             }
+            else if(oPlayer != null)
+                hasFoundPlayer= true;
             if (enemyHUD == null) enemyHUD = game.FindObjectOfType<HUD>();
             if (timeOfDeath == -1f)
             {

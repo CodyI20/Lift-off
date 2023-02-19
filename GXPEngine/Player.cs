@@ -1,4 +1,5 @@
 ﻿using GXPEngine;
+using System;
 using TiledMapParser;
 
 class Player : AnimationSprite
@@ -54,20 +55,33 @@ class Player : AnimationSprite
         timePlayerGotHit = Time.time;
         SetColor(0.8f, 0, 0);
         playerData.lives -= damage;
-        playerHUD.SetPlayerHealth((float)playerData.lives / playerData.startLives);
+        playerHUD.SetPlayerHealth((float)playerData.lives / playerData.maxLives);
         if (playerData.lives <= 0)
         {
-            ((MyGame)game).ResetCurrentLevel();
+            if (((MyGame)game).playerData.tries < ((MyGame)game).playerData.maxTries-1)
+            {
+                ((MyGame)game).playerData.tries++;
+                Console.WriteLine("Tries: {0}", ((MyGame)game).playerData.tries);
+                ((MyGame)game).ResetCurrentLevel();
+            }
+            else
+                ((MyGame)game).LoadLevel("EndScreen.tmx");
         }
     }
 
     public void GetHealed(int heal)
     {
-        if (playerData.lives + heal <= playerData.startLives)
+        if (playerData.lives + heal <= playerData.maxLives)
             playerData.lives += heal;
         else
-            playerData.lives = playerData.startLives;
-        playerHUD.SetPlayerHealth((float)playerData.lives / playerData.startLives);
+            playerData.lives = playerData.maxLives;
+        playerHUD.SetPlayerHealth((float)playerData.lives / playerData.maxLives);
+    }
+
+    public void IncreaseMaxHP(int amount)
+    {
+        playerData.maxLives += amount;
+        playerHUD.SetPlayerHealth((float)playerData.lives / playerData.maxLives);
     }
     void PlayerController()
     {
@@ -175,13 +189,13 @@ class Player : AnimationSprite
 
     void Shoot()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-        {
-            if (Input.mouseX < x + game.FindObjectOfType<Level>().x)
-                _mirrorX = true;
-            else
-                _mirrorX = false;
-        }
+        //if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        //{
+        //    if (Input.mouseX < x + game.FindObjectOfType<Level>().x)
+        //        _mirrorX = true;
+        //    else
+        //        _mirrorX = false;
+        //}
         if (Input.GetMouseButtonDown(0) && !isShooting)
         {
             Sound arrowShot = new Sound("BowDrawn_ArrowRelease.ogg");
@@ -200,13 +214,13 @@ class Player : AnimationSprite
             bullet.SetXY(x + (_mirrorX ? -1 : 1) * (width / 2), y);
             parent.AddChild(bullet);
         }
-        if (isShooting)
-        {
-            if (Input.mouseX < x + game.FindObjectOfType<Level>().x)
-                Mirror(true, _mirrorY);
-            else
-                Mirror(false, _mirrorY);
-        }
+        //if (isShooting)
+        //{
+        //    if (Input.mouseX < x + game.FindObjectOfType<Level>().x)
+        //        Mirror(true, _mirrorY);
+        //    else
+        //        Mirror(false, _mirrorY);
+        //}
         if (Time.time >= shotTime + 1000f && isShooting)
         {
             //playerData._playerAmmo--;

@@ -4,9 +4,12 @@ public class PlayerData
 {
     const int _startLives = 50;
     const int _startingDamage = 15;
+    const int _playerMaxTries = 3;
 
     int _lives = 0;
+    int _maxLives = _startLives;
     int _coins = 0; // should be placed in HUD
+    int _tries = 0;
     int _playerDamage = 15;
     //int playerAmmo;
 
@@ -16,17 +19,27 @@ public class PlayerData
     //    set { playerAmmo = value; }
     //}
 
+    public int maxTries
+    {
+        get { return _playerMaxTries; }
+    }
+    public int tries
+    {
+        get { return _tries; }
+        set { _tries = value; }
+    }
     public int playerDamage
     {
         get { return _playerDamage; }
         set { _playerDamage = value; }
     }
-    public int startLives
+    public int maxLives
     {
         get
         {
-            return _startLives;
+            return _maxLives;
         }
+        set { _maxLives = value; }
     }
 
     public int coins
@@ -69,6 +82,8 @@ public class PlayerData
         _lives = _startLives;
         _coins = 0;
         _playerDamage = _startingDamage;
+        if (_tries >= _playerMaxTries-1)
+            _tries = 0;
         Console.WriteLine("Resetting player data. Lives = {0}", _lives);
     }
 }
