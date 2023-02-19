@@ -135,7 +135,9 @@ class Enemy : AnimationSprite
         {
             Sound enemyDeath = new Sound("EnemyDeathSound.ogg");
             enemyDeath.Play();
-            ((MyGame)game).playerData.coins += 100;
+            CoinPickUp coin = new CoinPickUp("triangle.png", 1, 1, coinsAwarded);
+            coin.SetXY(x, y);
+            parent.AddChild(coin);
             timeOfDeath = Time.time;
         }
     }

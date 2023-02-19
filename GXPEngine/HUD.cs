@@ -6,14 +6,22 @@ class HUD : GameObject
 {
     private Sprite buyMenuBackground;
     private BuyButton[] optionButton;
-    int healthBarX;
-    EasyDraw playerHealthBar;
+    private Sprite characterPortrait;
+    private Sprite healthBarSprite;
+    //EasyDraw playerHealthBar;
     //EasyDraw playerAmmoCount;
     EasyDraw playerScore;
 
     public HUD() : base(false)
     {
-        healthBarX = 270;
+        characterPortrait = new Sprite("player_healthUI.png",false, false);
+        characterPortrait.SetOrigin(0, characterPortrait.height);
+        characterPortrait.SetXY(400, 100);
+        AddChild(characterPortrait);
+        healthBarSprite = new Sprite("player_HealthBarFull.png",false ,false);
+        healthBarSprite.SetOrigin(0, healthBarSprite.height);
+        healthBarSprite.SetXY(473, 53); // x = characterPortrait.x + 73; y = characterPortrait.y-47;
+        AddChild(healthBarSprite);
         playerScore = new EasyDraw(300, 50, false);
         playerScore.TextAlign(CenterMode.Center,CenterMode.Center);
         playerScore.SetXY(150, 20);
@@ -24,13 +32,13 @@ class HUD : GameObject
         //playerAmmoCount.SetXY(50, 20);
         //playerAmmoCount.Text("Ammo: " + ((MyGame)game).playerData._playerAmmo, 50, 20);
         //AddChild(playerAmmoCount);
-        playerHealthBar = new EasyDraw(healthBarX, 40, false);
-        playerHealthBar.ShapeAlign(CenterMode.Min, CenterMode.Min);
-        playerHealthBar.Stroke(0, 155);
-        playerHealthBar.Fill(Color.Green);
-        playerHealthBar.Rect(0, 0, 270, 40);
-        playerHealthBar.SetXY(game.width - 270, 20);
-        AddChild(playerHealthBar);
+        //playerHealthBar = new EasyDraw(healthBarX, 40, false);
+        //playerHealthBar.ShapeAlign(CenterMode.Min, CenterMode.Min);
+        //playerHealthBar.Stroke(0, 155);
+        //playerHealthBar.Fill(Color.Green);
+        //playerHealthBar.Rect(0, 0, 270, 40);
+        //playerHealthBar.SetXY(game.width - 270, 20);
+        //AddChild(playerHealthBar);
         buyMenuBackground = new Sprite("Vignette.png", false, false);
         optionButton = new BuyButton[5]; 
         SetupBuyButtons();
@@ -47,11 +55,7 @@ class HUD : GameObject
 
     public void SetPlayerHealth(float health) //health has to be a float number between 0 and 1
     {
-        //playerHealthBar = new EasyDraw((int)(healthBarX * health), 40, false);
-        playerHealthBar.Clear(Color.Red);
-        playerHealthBar.Fill(Color.Green);
-        //AddChild(playerHealthBar);
-        playerHealthBar.Rect(0, 0, playerHealthBar.width * health, playerHealthBar.height);
+        healthBarSprite.width *= health;
     }
     //public void SetPlayerAmmo(int ammo)
     //{
@@ -71,9 +75,9 @@ class HUD : GameObject
         {
             for(int i = 0; i < 3; i++)
             {
-                optionButton[i].width = 100;
-                optionButton[i].height = 30;
-                optionButton[i].SetXY(game.width / 2, (i+1) * 200);
+                optionButton[i].width = 250;
+                optionButton[i].height = 70;
+                optionButton[i].SetXY((game.width + optionButton[i].width)/2.7f, (i+1) * 150);
                 AddChild(optionButton[i]);
             }
             AddChild(buyMenuBackground);

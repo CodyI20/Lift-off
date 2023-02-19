@@ -9,7 +9,6 @@ class Player : AnimationSprite
     private bool isShooting = false;
     private bool isMoving = false;
     private bool isSprinting = false;
-    private int baseBulletDamage;
     private float shotTime; // Time the player pressed the button to shoot
     private PlayerData playerData;
     private HUD playerHUD = null;
@@ -27,7 +26,6 @@ class Player : AnimationSprite
             initialSpeed = obj.GetFloatProperty("initialSpeed", 1f);
             playerSpeed = obj.GetFloatProperty("playerSpeed", 1f);
             //playerData._playerAmmo = obj.GetIntProperty("playerAmmo", 20);
-            baseBulletDamage = obj.GetIntProperty("baseBulletDamage", 10);
         }
     }
     void Update()
@@ -190,7 +188,7 @@ class Player : AnimationSprite
             arrowShot.Play();
             shotTime = Time.time;
             isShooting = true;
-            Bullet bullet = new Bullet("arrow.png", _mirrorX ? -5 : 5, 0, _mirrorX ? 180 : 0, baseBulletDamage);
+            Bullet bullet = new Bullet("arrow.png", _mirrorX ? -5 : 5, 0, _mirrorX ? 180 : 0, playerData.playerDamage);
             bullet.SetXY(x + (_mirrorX ? -1 : 1) * (width / 2), y);
             parent.AddChild(bullet);
         }
@@ -198,7 +196,7 @@ class Player : AnimationSprite
         {
             shotTime = Time.time;
             isShooting = true;
-            AtomicBullet bullet = new AtomicBullet("arrow.png", _mirrorX ? -5 : 5, 0, _mirrorX ? 180 : 0, baseBulletDamage);
+            AtomicBullet bullet = new AtomicBullet("arrow.png", _mirrorX ? -5 : 5, 0, _mirrorX ? 180 : 0, playerData.playerDamage);
             bullet.SetXY(x + (_mirrorX ? -1 : 1) * (width / 2), y);
             parent.AddChild(bullet);
         }

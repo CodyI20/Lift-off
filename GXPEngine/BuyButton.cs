@@ -8,13 +8,16 @@ using TiledMapParser;
 
 class BuyButton : Button
 {
+    string filename;
     public BuyButton(string filename, int cols, int rows) : base(filename, cols, rows)
     {
-
+        this.filename = filename;
     }
 
     protected override void DoSomething()
     {
+        if (filename == "square.png")
+            ((MyGame)game).playerData.playerDamage += 2;
         ((MyGame)game).gameIsPaused = false;
     }
 

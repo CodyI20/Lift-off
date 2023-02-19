@@ -7,7 +7,6 @@ public class MyGame : Game
     public bool gameIsPaused = false;
     public string startLevel =
     "MainMenu.tmx";
-    //".tmx";
     //"TestMap.tmx";
     //"Test.tmx";
     string levelToLoad = null;

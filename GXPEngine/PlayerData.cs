@@ -3,6 +3,7 @@ using GXPEngine;
 public class PlayerData
 {
     const int _startLives = 50;
+    const int _startingDamage = 15;
 
     int _lives = 0;
     int _coins = 0; // should be placed in HUD
@@ -66,6 +67,8 @@ public class PlayerData
     public void Reset()
     {
         _lives = _startLives;
+        _coins = 0;
+        _playerDamage = _startingDamage;
         Console.WriteLine("Resetting player data. Lives = {0}", _lives);
     }
 }

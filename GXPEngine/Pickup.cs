@@ -8,27 +8,30 @@ using TiledMapParser;
 
 class Pickup : AnimationSprite
 {
-    protected Player player;
     public Pickup(string filename, int cols, int rows, TiledLoader obj = null) : base(filename,cols,rows)
     {
         collider.isTrigger= true;
     }
 
-    virtual protected void GrabPickUP(string SoundFile = null)
+    protected void GrabPickUP(string SoundFile = null)
     {
-        if (SoundFile != null)
+        if(parent.FindObjectOfType<Player>()!=null && HitTest(parent.FindObjectOfType<Player>()))
         {
-            Sound soundToPlay = new Sound(SoundFile);
-            soundToPlay.Play();
+            if (SoundFile != null)
+            {
+                Sound soundToPlay = new Sound(SoundFile);
+                soundToPlay.Play();
+            }
+            DoSomething();
+            LateDestroy();
         }
-        LateDestroy();
+    }
+
+    protected virtual void DoSomething()
+    {
     }
 
     void Update()
     {
-        if (player != null)
-        {
-            player = parent.FindObjectOfType<Player>();
-        }
     }
 }
