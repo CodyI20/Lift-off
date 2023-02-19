@@ -38,7 +38,7 @@ public class MyGame : Game
             levelToLoad = null;
         }
     }
-    public void LoadLevel(string filename, string soundFile = "BackgroundMusic.ogg")
+    public void LoadLevel(string filename, bool shouldResetPlayerData = false, string soundFile = "BackgroundMusic.ogg")
     {
         if (backgroundMusicSC != null)
             backgroundMusicSC.Stop();
@@ -46,6 +46,8 @@ public class MyGame : Game
         backgroundMusicSC = backgroundMusic.Play();
         levelToLoad = filename;
         currentLevel = filename;
+        if (shouldResetPlayerData)
+            playerData.Reset();
     }
 
     void PauseGameSwitch()

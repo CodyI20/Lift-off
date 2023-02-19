@@ -82,7 +82,7 @@ public class PlayerData
         _lives = _startLives;
         _coins = 0;
         _playerDamage = _startingDamage;
-        if (_tries >= _playerMaxTries-1)
+        if (_tries >= _playerMaxTries)
             _tries = 0;
         Console.WriteLine("Resetting player data. Lives = {0}", _lives);
     }

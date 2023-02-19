@@ -65,7 +65,10 @@ class Player : AnimationSprite
                 ((MyGame)game).ResetCurrentLevel();
             }
             else
-                ((MyGame)game).LoadLevel("EndScreen.tmx");
+            {
+                ((MyGame)game).playerData.tries++;
+                ((MyGame)game).LoadLevel("EndScreen.tmx",true);
+            }
         }
     }
 
