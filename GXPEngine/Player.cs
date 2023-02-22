@@ -10,6 +10,10 @@ class Player : AnimationSprite
     private bool isShooting = false;
     private bool isMoving = false;
     private bool isSprinting = false;
+    private bool isAttacking = false;
+    private float meleeAttackDelay;
+    private float timeItAttackedMelee;
+    private float meleeAttackRadius;
     private float shotTime; // Time the player pressed the button to shoot
     private PlayerData playerData;
     private HUD playerHUD = null;
@@ -26,6 +30,8 @@ class Player : AnimationSprite
         {
             initialSpeed = obj.GetFloatProperty("initialSpeed", 1f);
             playerSpeed = obj.GetFloatProperty("playerSpeed", 1f);
+            meleeAttackRadius = obj.GetFloatProperty("meleeAttackRadius", 100f);
+            meleeAttackDelay = obj.GetFloatProperty("meleeAttackDelay", 1000f);
             //playerData._playerAmmo = obj.GetIntProperty("playerAmmo", 20);
         }
     }
@@ -40,6 +46,7 @@ class Player : AnimationSprite
             Shoot();
             PlayerController();
             SetScore();
+            MeleeAttack();
         }
     }
 
@@ -58,7 +65,7 @@ class Player : AnimationSprite
         playerHUD.SetPlayerHealth((float)playerData.lives / playerData.maxLives);
         if (playerData.lives <= 0)
         {
-            if (((MyGame)game).playerData.tries < ((MyGame)game).playerData.maxTries-1)
+            if (((MyGame)game).playerData.tries < ((MyGame)game).playerData.maxTries-1) // it's maxTries-1 because this is exectued only when the player has died
             {
                 ((MyGame)game).playerData.tries++;
                 Console.WriteLine("Tries: {0}", ((MyGame)game).playerData.tries);
@@ -68,6 +75,30 @@ class Player : AnimationSprite
             {
                 ((MyGame)game).playerData.tries++;
                 ((MyGame)game).LoadLevel("EndScreen.tmx",true);
+            }
+        }
+    }
+
+    private void MeleeAttack()
+    {
+        if (Time.time >= timeItAttackedMelee + meleeAttackDelay)
+        {
+            if(Input.GetKey(Key.T))
+            {
+                GameObject[] enemyHit = parent.FindObjectsOfType<Enemy>();
+                for (int i = 0; i < enemyHit.Length; i++)
+                {
+                    if (enemyHit[i] is Enemy && DistanceTo(enemyHit[i]) <= meleeAttackRadius)
+                    {
+                        if (!_mirrorX && enemyHit[i].x > x || _mirrorX && enemyHit[i].x < x)
+                        {
+                            Enemy enemy1 = (Enemy)enemyHit[i];
+                            enemy1.DamageEnemy(((MyGame)game).playerData.playerDamage);
+                        }
+                    }
+                }
+                isAttacking = true;
+                timeItAttackedMelee = Time.time;
             }
         }
     }
@@ -135,18 +166,18 @@ class Player : AnimationSprite
     }
     void Animations()
     {
-        if (isShooting)
+        if (isAttacking)
         {
             SetCycle(112, 6);
         }
-        if (isMoving && !isShooting)
+        if (isMoving && !isAttacking)
         {
             if (isSprinting)
                 SetCycle(9, 4);
             else
                 SetCycle(34, 4);
         }
-        else if (!isMoving && !isShooting)
+        else if (!isMoving && !isAttacking)
             SetCycle(0);
         Animate(0.1f);
     }
@@ -199,7 +230,7 @@ class Player : AnimationSprite
         //    else
         //        _mirrorX = false;
         //}
-        if (Input.GetMouseButtonDown(0) && !isShooting)
+        if (Input.GetKeyDown(Key.G) && !isShooting)
         {
             Sound arrowShot = new Sound("BowDrawn_ArrowRelease.ogg");
             arrowShot.Play();
@@ -209,7 +240,7 @@ class Player : AnimationSprite
             bullet.SetXY(x + (_mirrorX ? -1 : 1) * (width / 2), y);
             parent.AddChild(bullet);
         }
-        if (Input.GetMouseButtonDown(1) && !isShooting)
+        if (Input.GetKeyDown(Key.J) && !isShooting)
         {
             shotTime = Time.time;
             isShooting = true;

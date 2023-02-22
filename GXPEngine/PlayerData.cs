@@ -2,7 +2,7 @@
 using GXPEngine;
 public class PlayerData
 {
-    const int _startLives = 50;
+    const int _startLives = 1000;
     const int _startingDamage = 15;
     const int _playerMaxTries = 3;
 

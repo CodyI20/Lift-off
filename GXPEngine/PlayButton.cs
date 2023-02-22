@@ -12,7 +12,6 @@ class PlayButton : Button
     public PlayButton(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
     {
         loadFilename = obj.GetStringProperty("load", "RPGMap");
-        ((MyGame)game).LoadLevel(loadFilename + ".tmx");
     }
 
     protected override void DoSomething()

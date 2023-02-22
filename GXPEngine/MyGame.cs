@@ -1,6 +1,8 @@
 using GXPEngine;                                // GXPEngine contains the engine
 using System.Collections.Generic;
 using System;
+using System.IO.Ports;
+using System.Threading;
 
 public class MyGame : Game
 {
@@ -12,12 +14,15 @@ public class MyGame : Game
     string levelToLoad = null;
     string currentLevel;
     private SoundChannel backgroundMusicSC;
+    private float timeItResumed;
     public readonly PlayerData playerData;
     public MyGame() : base(1280, 720, false, false, -1, -1, true)     // Create a window
     {
+
         playerData = new PlayerData();
         LoadLevel(startLevel);
         OnAfterStep += CheckLoadLevel;
+
     }
     void DestroyAll()
     {
@@ -33,7 +38,7 @@ public class MyGame : Game
         {
             DestroyAll();
             AddChild(new Level(levelToLoad));
-            if (levelToLoad != "MainMenu.tmx")
+            if (currentLevel != "MainMenu.tmx")
                 AddChild(new HUD());
             levelToLoad = null;
         }
@@ -52,12 +57,16 @@ public class MyGame : Game
 
     void PauseGameSwitch()
     {
-        if (levelToLoad != "MainMenu.tmx" && Input.GetKeyDown(Key.F))
+        if (!gameIsPaused && levelToLoad != "MainMenu.tmx" && levelToLoad!= "EndScreen.tmx" && Time.time >= timeItResumed + 30000f)
         {
-            gameIsPaused = !gameIsPaused;
+            gameIsPaused = true;
         }
     }
-
+    public void ResumeGame()
+    {
+        gameIsPaused = false;
+        timeItResumed = Time.time;
+    }
     public void ResetCurrentLevel()
     {
         DestroyAll();
@@ -73,6 +82,29 @@ public class MyGame : Game
 
     static void Main()                          // Main() is the first method that's called when the program is run
     {
+        //SerialPort port = new SerialPort();
+        //port.PortName = "COM4";
+        //port.BaudRate = 9600;
+        //port.RtsEnable = true;
+        //port.DtrEnable = true;
+        //port.Open();
+        //while (true)
+        //{
+        //    string line = port.ReadLine(); // read separated values
+        //                                   //string line = port.ReadExisting(); // when using characters
+        //    //if (line != "")
+        //    //{
+        //    //    Console.WriteLine("Read from port: " + line);
+
+        //    //}
+
+        //    if (Console.KeyAvailable)
+        //    {
+        //        ConsoleKeyInfo key = Console.ReadKey();
+        //        port.Write(key.KeyChar.ToString());  // writing a string to Arduino
+        //    }
+        //    Thread.Sleep(30);
+        //}
         new MyGame().Start();                   // Create a "MyGame" and start it
     }
 }

@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 using GXPEngine;
 using TiledMapParser;
 
-class AttackBonus : Pickup
-{
-    int attackIncreaseValue;
-    public AttackBonus(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
-    {
-        if (obj != null)
-        {
-            attackIncreaseValue = obj.GetIntProperty("attackIncreaseValue", 1);
-        }
-    }
+//class AttackBonus : Pickup
+//{
+//    int attackIncreaseValue;
+//    public AttackBonus(string filename, int cols, int rows, Player player) : base(filename, cols, rows, player)
+//    {
+//    }
 
-    void Update()
-    {
-        GrabPickUP();
-    }
+//    void Update()
+//    {
+//        GrabPickUP();
+//    }
 
-    protected override void DoSomething()
-    {
-        ((MyGame)game).playerData.playerDamage += attackIncreaseValue;
-        Console.WriteLine("Damage = {0}", ((MyGame)game).playerData.playerDamage);
-    }
-}
+//    protected override void DoSomething()
+//    {
+//        ((MyGame)game).playerData.playerDamage += attackIncreaseValue;
+//        Console.WriteLine("Damage = {0}", ((MyGame)game).playerData.playerDamage);
+//    }
+//}

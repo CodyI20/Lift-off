@@ -36,7 +36,7 @@ class BuyButton : Button
             ((MyGame)game).FindObjectOfType<Player>().GetHealed(healing);
             Console.WriteLine("MaxHP: {0}", ((MyGame)game).playerData.maxLives);
         }
-        ((MyGame)game).gameIsPaused = false;
+        ((MyGame)game).ResumeGame();
     }
 
     bool HasEnoughCoins()

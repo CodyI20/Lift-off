@@ -10,7 +10,7 @@ using TiledMapParser;
 class CoinPickUp : Pickup
 {
     private int coinsAwarded;
-    public CoinPickUp(string filename, int cols, int rows, int coinsAwarded) : base(filename, cols, rows)
+    public CoinPickUp(string filename, int cols, int rows, int coinsAwarded, Player player) : base(filename, cols, rows, player)
     {
         this.coinsAwarded = coinsAwarded;
     }
