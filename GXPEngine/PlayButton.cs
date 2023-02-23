@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GXPEngine;
+﻿using GXPEngine;
 using TiledMapParser;
 
 class PlayButton : Button
@@ -16,11 +11,12 @@ class PlayButton : Button
 
     protected override void DoSomething()
     {
-        ((MyGame)game).LoadLevel(loadFilename + ".tmx");
+        if (Input.GetKeyDown(Key.G))
+            ((MyGame)game).LoadLevel(loadFilename + ".tmx");
     }
 
     void Update()
     {
-        ButtonFunctionality();
+        DoSomething();
     }
 }

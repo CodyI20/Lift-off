@@ -13,21 +13,18 @@ class Button : AnimationSprite
         
     }
 
-    protected void ButtonFunctionality()
-    {
-        if (this.HitTestPoint(Input.mouseX, Input.mouseY))
-        {
-            this.SetColor(1, 1, 1);
-            if (Input.GetMouseButtonDown(0))
-            {
-                DoSomething();
-            }
-        }
-        else
-        {
-            this.SetColor(0.7f, 0.7f, 0.7f);
-        }
-    }
+    //protected void ButtonFunctionality()
+    //{
+    //    this.SetColor(1, 1, 1);
+    //    DoSomething();
+    //    //if (this.HitTestPoint(Input.mouseX, Input.mouseY))
+    //    //{
+    //    //}
+    //    //else
+    //    //{
+    //    //    this.SetColor(0.7f, 0.7f, 0.7f);
+    //    //}
+    //}
     protected virtual void DoSomething()
     {
     }

@@ -89,11 +89,11 @@ class EnemySpawner : AnimationSprite
         }
         if(i>= 600 && i<=900)
         {
-            filename = "Enemy.png"; //ZOMBIE
-            cols = 5;
-            rows = 5;
+            filename = "Zombie.png"; //ZOMBIE
+            cols = 6;
+            rows = 6;
             enemyDamageSave *= 5;
-            enemyMaxHealthSave *= 4;
+            enemyMaxHealthSave *= 3;
             enemySpeedSave /= 1.5f;
         }
         Enemy enemy = new Enemy(filename, cols, rows,enemyMaxHealthSave,enemyDamageSave,distanceToStopFromFollowingPlayer,distanceToAttackPlayer,enemySpeedSave,animationTime,coinsAwarded,timeBetweenAttacks);

@@ -10,9 +10,15 @@ class HUD : GameObject
     //EasyDraw playerHealthBar;
     //EasyDraw playerAmmoCount;
     EasyDraw playerScore;
+    EasyDraw playerLives;
 
     public HUD() : base(false)
     {
+        playerLives = new EasyDraw(1280, 720, false);
+        playerLives.TextAlign(CenterMode.Min, CenterMode.Center);
+        playerLives.SetXY(100, 50);
+        playerLives.Text("Lives left: " + (((MyGame)game).playerData.maxTries - ((MyGame)game).playerData.tries));
+        AddChild(playerLives);
         characterPortrait = new Sprite("player_healthUI.png", false, false);
         characterPortrait.SetOrigin(0, characterPortrait.height);
         characterPortrait.SetXY(400, 100);
@@ -65,6 +71,12 @@ class HUD : GameObject
     //    playerAmmoCount.ClearTransparent();
     //    playerAmmoCount.Text("Ammo: "+ammo,50,20);
     //}
+
+    public void SetPlayerTries(int tries)
+    {
+        playerLives.ClearTransparent();
+        playerLives.Text("Lives left: " + tries);
+    }
 
     public void SetPlayerScore(int score)
     {

@@ -97,22 +97,50 @@ class Enemy : AnimationSprite
     {
         if (timeOfDeath == -1f)
         {
-            if (enemyIsAttacking)
+            if(filename == "Enemy.png")
             {
-                SetCycle(8, 12);
+                if (enemyIsAttacking)
+                {
+                    SetCycle(8, 12);
+                }
+                if (enemyIsMoving && !enemyIsAttacking)
+                {
+                    SetCycle(0, 8);
+                }
+                else if (!enemyIsMoving && !enemyIsAttacking)
+                    SetCycle(8, 2);
             }
-            if (enemyIsMoving && !enemyIsAttacking)
+            if(filename == "Zombie.png")
             {
-                SetCycle(0, 8);
+                if(enemyIsAttacking)
+                {
+                    SetCycle(11, 9);
+                }
+                if (enemyIsMoving && !enemyIsAttacking)
+                {
+                    SetCycle(0, 10);
+                }
+                else if(!enemyIsMoving && !enemyIsAttacking)
+                {
+                    SetCycle(6, 3);
+                }
             }
-            else if (!enemyIsMoving && !enemyIsAttacking)
-                SetCycle(8, 2);
+
         }
         else
         {
-            SetCycle(20, 4);
-            if (Time.time >= timeOfDeath + 600f)
-                LateDestroy();
+            if (filename == "Enemy.png")
+            {
+                SetCycle(20, 4);
+                if (Time.time >= timeOfDeath + 600f)
+                    LateDestroy();
+            }
+            if (filename == "Zombie.png")
+            {
+                SetCycle(21, 8);
+                if (Time.time >= timeOfDeath + 1300f)
+                    LateDestroy();
+            }
         }
         Animate(0.1f);
     }

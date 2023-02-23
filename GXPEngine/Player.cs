@@ -65,10 +65,12 @@ class Player : AnimationSprite
         playerHUD.SetPlayerHealth((float)playerData.lives / playerData.maxLives);
         if (playerData.lives <= 0)
         {
+            if (playerData.coins > playerData.playerHighscore)
+                playerData.SaveData("highscore.txt", playerData.coins);
             if (((MyGame)game).playerData.tries < ((MyGame)game).playerData.maxTries-1) // it's maxTries-1 because this is exectued only when the player has died
             {
                 ((MyGame)game).playerData.tries++;
-                Console.WriteLine("Tries: {0}", ((MyGame)game).playerData.tries);
+                playerHUD.SetPlayerTries(((MyGame)game).playerData.maxTries - ((MyGame)game).playerData.tries);
                 ((MyGame)game).ResetCurrentLevel();
             }
             else
@@ -81,7 +83,7 @@ class Player : AnimationSprite
 
     private void MeleeAttack()
     {
-        if (Time.time >= timeItAttackedMelee + meleeAttackDelay)
+        if (Time.time >= timeItAttackedMelee + meleeAttackDelay) // create an AnimationSprite that spawns a bit in front of the player for the swing animation
         {
             if(Input.GetKey(Key.T))
             {
@@ -101,6 +103,8 @@ class Player : AnimationSprite
                 timeItAttackedMelee = Time.time;
             }
         }
+        if (isAttacking && Time.time >= timeItAttackedMelee + 700f)
+            isAttacking = false;
     }
 
     public void GetHealed(int heal)

@@ -1,6 +1,7 @@
 using GXPEngine;                                // GXPEngine contains the engine
 using System.Collections.Generic;
 using System;
+using System.IO;
 using System.IO.Ports;
 using System.Threading;
 
@@ -14,12 +15,13 @@ public class MyGame : Game
     string levelToLoad = null;
     string currentLevel;
     private SoundChannel backgroundMusicSC;
-    private float timeItResumed;
+    private float timeItResumed = 0;
     public readonly PlayerData playerData;
     public MyGame() : base(1280, 720, false, false, -1, -1, true)     // Create a window
     {
 
         playerData = new PlayerData();
+        playerData.LoadData("highscore.txt");
         LoadLevel(startLevel);
         OnAfterStep += CheckLoadLevel;
 
@@ -38,7 +40,7 @@ public class MyGame : Game
         {
             DestroyAll();
             AddChild(new Level(levelToLoad));
-            if (currentLevel != "MainMenu.tmx")
+            if (currentLevel != "MainMenu.tmx" && currentLevel != "EndScreen.tmx")
                 AddChild(new HUD());
             levelToLoad = null;
         }
@@ -57,7 +59,9 @@ public class MyGame : Game
 
     void PauseGameSwitch()
     {
-        if (!gameIsPaused && levelToLoad != "MainMenu.tmx" && levelToLoad!= "EndScreen.tmx" && Time.time >= timeItResumed + 30000f)
+        if(currentLevel == "MainMenu.tmx" || currentLevel == "EndScreen.tmx")
+            timeItResumed=Time.time;
+        if (!gameIsPaused && currentLevel != "MainMenu.tmx" && currentLevel != "EndScreen.tmx" && Time.time >= timeItResumed + 30000f)
         {
             gameIsPaused = true;
         }
@@ -69,6 +73,7 @@ public class MyGame : Game
     }
     public void ResetCurrentLevel()
     {
+        timeItResumed = Time.time;
         DestroyAll();
         playerData.Reset();
         AddChild(new Level(currentLevel));

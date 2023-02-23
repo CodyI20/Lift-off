@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GXPEngine;
-using TiledMapParser;
+﻿using GXPEngine;
+using System;
 
 class BuyButton : Button
 {
@@ -12,36 +7,39 @@ class BuyButton : Button
     const int damageIncrease = 2;
     const int maxHPIncrease = 10;
 
-
-    string filename;
     public BuyButton(string filename, int cols, int rows) : base(filename, cols, rows)
     {
-        this.filename = filename;
     }
 
     protected override void DoSomething()
     {
-        if (filename == "square.png")
-            ((MyGame)game).playerData.playerDamage += damageIncrease;
-        if (((MyGame)game).playerData.lives < ((MyGame)game).playerData.maxLives && HasEnoughCoins() && filename == "colors.png")
+        if (HasEnoughCoins() && Input.GetKeyDown(Key.J))
         {
+            ((MyGame)game).playerData.playerDamage += damageIncrease;
             SubstractCoins();
+        }
+        if (((MyGame)game).playerData.lives < ((MyGame)game).playerData.maxLives && HasEnoughCoins() && Input.GetKeyDown(Key.G))
+        {
             ((MyGame)game).FindObjectOfType<Player>().GetHealed(healing);
             Console.WriteLine("CurrentHP: {0}", ((MyGame)game).playerData.lives);
-        }
-        if (HasEnoughCoins() && filename == "circle.png")
-        {
             SubstractCoins();
+        }
+        if (HasEnoughCoins() && Input.GetKeyDown(Key.T))
+        {
             ((MyGame)game).FindObjectOfType<Player>().IncreaseMaxHP(maxHPIncrease);
             ((MyGame)game).FindObjectOfType<Player>().GetHealed(healing);
             Console.WriteLine("MaxHP: {0}", ((MyGame)game).playerData.maxLives);
+            SubstractCoins();
         }
-        ((MyGame)game).ResumeGame();
+        if (Input.GetKeyDown(Key.S))
+        {
+            ((MyGame)game).ResumeGame();
+        }
     }
 
     bool HasEnoughCoins()
     {
-        if (((MyGame)game).playerData.coins >= 0)
+        if (((MyGame)game).playerData.coins >= 300)
         {
             return true;
         }
@@ -51,10 +49,11 @@ class BuyButton : Button
     void SubstractCoins()
     {
         ((MyGame)game).playerData.coins -= 0;
+        ((MyGame)game).ResumeGame();
     }
 
     void Update()
     {
-        ButtonFunctionality();
+        DoSomething();
     }
 }

@@ -8,6 +8,8 @@ class Bullet : Sprite
     protected float vx, vy;
     protected Level level;
     private int bulletDamage;
+    private float timeOfImpact;
+    //protected AnimationSprite explosion = new AnimationSprite("",?,?);
 
     public Bullet(string filename, float pVx, float pVy, float pRotation, int bulletDamage) : base(filename)
     {
@@ -17,6 +19,7 @@ class Bullet : Sprite
         vy = pVy;
         rotation = pRotation;
         this.bulletDamage = bulletDamage;
+        //explosion = new AnimationSprite("",?,?);
     }
     protected void Move()
     {
@@ -45,10 +48,24 @@ class Bullet : Sprite
     }
     protected void DestroyArrow()
     {
+        //explosion.SetXY(x, y);
+        //parent.AddChild(explosion);
+        timeOfImpact = Time.time;
         Sound arrowHit = new Sound("ArrowImpact.ogg");
         arrowHit.Play();
-        LateDestroy();
+        visible = false;
+
     }
+
+    protected void DestroyObject()
+    {
+        if (Time.time >= timeOfImpact + 1000f)
+        {
+            //explosion.LateDestroy();
+            LateDestroy();
+        }
+    }
+
     void Update()
     {
         if (!((MyGame)game).gameIsPaused)
@@ -56,6 +73,7 @@ class Bullet : Sprite
             Move();
             enemyCollisionCheck(bulletDamage);
             checkOffScreen();
+            DestroyObject();
         }
     }
 }
