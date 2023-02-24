@@ -80,8 +80,8 @@ class EnemySpawner : AnimationSprite
         }
         if (i >= 300 && i<=599)
         {
-            filename = "Enemy.png"; //MANTIS
-            cols = 5;
+            filename = "Mantis.png"; //MANTIS
+            cols = 6;
             rows = 5;
             enemyDamageSave *= 2;
             enemyMaxHealthSave /= 2;

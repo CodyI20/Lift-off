@@ -4,9 +4,9 @@ using System.Runtime.ConstrainedExecution;
 using GXPEngine;
 public class PlayerData
 {
-    const int _startLives = 50;
+    const int _startLives = 100;
     const int _startingDamage = 15;
-    const int _playerMaxTries = 3;
+    const int _playerMaxTries = 1;
     public int playerHighscore;
 
     int _lives = 0;
@@ -14,6 +14,7 @@ public class PlayerData
     int _coins = 0; // should be placed in HUD
     int _tries = 0;
     int _playerDamage = 15;
+    public int totalScore = 0;
     //int playerAmmo;
 
     //public int _playerAmmo
@@ -160,6 +161,7 @@ public class PlayerData
     public PlayerData()
     {
         Reset();
+        ResetScore();
     }
 
     public void Reset()
@@ -167,8 +169,16 @@ public class PlayerData
         _lives = _startLives;
         _coins = 0;
         _playerDamage = _startingDamage;
-        if (_tries >= _playerMaxTries)
-            _tries = 0;
         Console.WriteLine("Resetting player data. Lives = {0}", _lives);
+    }
+
+    public void ResetScore()
+    {
+        if (_tries >= _playerMaxTries)
+        {
+            totalScore = 0;
+            _tries = 0;
+            Console.WriteLine("Resetting player score. TotalScore = {0}", totalScore);
+        }
     }
 }

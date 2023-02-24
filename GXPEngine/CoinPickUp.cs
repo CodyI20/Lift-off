@@ -16,7 +16,10 @@ class CoinPickUp : Pickup
     }
     protected override void DoSomething()
     {
+        Sound coinPick = new Sound("Coin pickup.wav");
+        coinPick.Play();
         ((MyGame)game).playerData.coins += coinsAwarded;
+        ((MyGame)game).playerData.totalScore += coinsAwarded;
     }
 
     void Update()

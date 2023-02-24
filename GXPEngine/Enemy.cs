@@ -1,7 +1,4 @@
 ﻿using GXPEngine;
-using System.Drawing;
-using System;
-using TiledMapParser;
 class Enemy : AnimationSprite
 {
     private int enemyMaxHealth;
@@ -21,6 +18,7 @@ class Enemy : AnimationSprite
     private float timeEnemyGotHit;
     private float timeOfDeath = -1f;
     private bool hasFoundPlayer = false;
+    public bool enemyIsDying = false;
     private string filename;
 
     private Player oPlayer;
@@ -97,7 +95,7 @@ class Enemy : AnimationSprite
     {
         if (timeOfDeath == -1f)
         {
-            if(filename == "Enemy.png")
+            if (filename == "Enemy.png")
             {
                 if (enemyIsAttacking)
                 {
@@ -110,9 +108,9 @@ class Enemy : AnimationSprite
                 else if (!enemyIsMoving && !enemyIsAttacking)
                     SetCycle(8, 2);
             }
-            if(filename == "Zombie.png")
+            if (filename == "Zombie.png")
             {
-                if(enemyIsAttacking)
+                if (enemyIsAttacking)
                 {
                     SetCycle(11, 9);
                 }
@@ -120,10 +118,19 @@ class Enemy : AnimationSprite
                 {
                     SetCycle(0, 10);
                 }
-                else if(!enemyIsMoving && !enemyIsAttacking)
+                else if (!enemyIsMoving && !enemyIsAttacking)
                 {
                     SetCycle(6, 3);
                 }
+            }
+            if (filename == "Mantis.png")
+            {
+                if (enemyIsAttacking)
+                    SetCycle(8, 9);
+                if (enemyIsMoving && !enemyIsAttacking)
+                    SetCycle(0, 8);
+                else if (!enemyIsMoving && !enemyIsAttacking)
+                    SetCycle(0, 3);
             }
 
         }
@@ -141,6 +148,12 @@ class Enemy : AnimationSprite
                 if (Time.time >= timeOfDeath + 1300f)
                     LateDestroy();
             }
+            if (filename == "Mantis.png")
+            {
+                SetCycle(18, 7);
+                if (Time.time >= timeOfDeath + 1100f)
+                    LateDestroy();
+            }
         }
         Animate(0.1f);
     }
@@ -148,14 +161,17 @@ class Enemy : AnimationSprite
     protected void FollowPlayer() // Function that makes the AI follow the player, as well as flip it accordingly using Mirror and Move.
     {
         float deltaSpeed = enemySpeed * Time.deltaTime;
-        if (oPlayer.x < x)
+        if (oPlayer.x - x < 20f)
             Mirror(true, _mirrorY);
         else
             Mirror(false, _mirrorY);
         enemyIsMoving = false;
         if (DistanceTo(game.FindObjectOfType(typeof(Player))) >= distanceToStopFromFollowingPlayer)
         {
-            Move(Mathf.Sign(oPlayer.x - x) * deltaSpeed, Mathf.Sign(oPlayer.y - y) * deltaSpeed/2);
+            if (Mathf.Abs(oPlayer.y - y) > 65f && Mathf.Abs(oPlayer.y - y) < 300f)
+                Move(Mathf.Sign(oPlayer.x - x) * deltaSpeed/1.6f, Mathf.Sign(oPlayer.y - y) * deltaSpeed / 2.3f);
+            else
+                Move(Mathf.Sign(oPlayer.x - x) * deltaSpeed, Mathf.Sign(oPlayer.y - y) * deltaSpeed / 2.3f);
             enemyIsMoving = true;
         }
     }
@@ -166,7 +182,7 @@ class Enemy : AnimationSprite
         {
             if (Time.time >= timeBetweenAttacks + timeItAttacked && !enemyIsAttacking)
             {
-                Sound enemySwing = new Sound("EnemyAxeSwing.ogg");
+                Sound enemySwing = new Sound("Enemy attack.wav");
                 enemySwing.Play();
                 enemyIsAttacking = true;
                 timeItAttacked = Time.time;
@@ -182,17 +198,20 @@ class Enemy : AnimationSprite
 
     public void DamageEnemy(int damage)
     {
+        Sound enemyHit = new Sound("Enemy hit.wav");
+        enemyHit.Play();
         timeEnemyGotHit = Time.time;
-        SetColor(0.3f,0f,0f);
+        SetColor(0.3f, 0f, 0f);
         enemyHealth -= damage; // The enemy will be able to die only when in combat with you (unless you one-shot). This is due to ResetEnemyPosition() being called whenever the player is not in range to be followed. This prevents the player from killing the enemy without being chased(again, unless he one shots it).
         if (enemyHealth <= 0)
         {
-            Sound enemyDeath = new Sound("EnemyDeathSound.ogg");
+            Sound enemyDeath = new Sound("Enemy dead.wav");
             enemyDeath.Play();
-            CoinPickUp coin = new CoinPickUp("triangle.png", 1, 1, coinsAwarded,oPlayer);
+            CoinPickUp coin = new CoinPickUp("Coin.png", 1, 1, coinsAwarded, oPlayer);
             coin.SetXY(x, y);
             parent.AddChild(coin);
             timeOfDeath = Time.time;
+            enemyIsDying = true;
         }
     }
 

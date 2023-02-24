@@ -8,8 +8,9 @@ class Bullet : Sprite
     protected float vx, vy;
     protected Level level;
     private int bulletDamage;
-    private float timeOfImpact;
-    //protected AnimationSprite explosion = new AnimationSprite("",?,?);
+    protected float timeOfImpact;
+    protected bool hasImpactedBomb = false;
+    protected AnimationSprite explosion;
 
     public Bullet(string filename, float pVx, float pVy, float pRotation, int bulletDamage) : base(filename)
     {
@@ -19,7 +20,7 @@ class Bullet : Sprite
         vy = pVy;
         rotation = pRotation;
         this.bulletDamage = bulletDamage;
-        //explosion = new AnimationSprite("",?,?);
+        explosion = new AnimationSprite("Boom.png",5,1,-1,false,false);
     }
     protected void Move()
     {
@@ -42,26 +43,33 @@ class Bullet : Sprite
             {
                 Enemy enemy1 = (Enemy)enemyHit[i];
                 enemy1.DamageEnemy(pBulletDamage);
-                DestroyArrow();
+                PlayEffects();
+                BulletHit();
             }
         }
     }
-    protected void DestroyArrow()
-    {
-        //explosion.SetXY(x, y);
-        //parent.AddChild(explosion);
-        timeOfImpact = Time.time;
-        Sound arrowHit = new Sound("ArrowImpact.ogg");
-        arrowHit.Play();
-        visible = false;
 
+    virtual protected void PlayEffects()
+    {
+    }
+
+    protected void BulletHit()
+    {
+        timeOfImpact = Time.time;
+        hasImpactedBomb = true;
+        visible = false;
+        collider = null;
     }
 
     protected void DestroyObject()
     {
-        if (Time.time >= timeOfImpact + 1000f)
+        if (hasImpactedBomb && Time.time >= timeOfImpact + 400f)
         {
-            //explosion.LateDestroy();
+            if(explosion != null)
+            {
+                explosion.LateDestroy();
+            }
+            hasImpactedBomb = false;
             LateDestroy();
         }
     }

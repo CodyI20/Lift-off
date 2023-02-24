@@ -12,14 +12,14 @@ public class MyGame : Game
     "MainMenu.tmx";
     //"TestMap.tmx";
     //"Test.tmx";
+    //"EndScreen.tmx";
     string levelToLoad = null;
-    string currentLevel;
+    public string currentLevel;
     private SoundChannel backgroundMusicSC;
     private float timeItResumed = 0;
     public readonly PlayerData playerData;
     public MyGame() : base(1280, 720, false, false, -1, -1, true)     // Create a window
     {
-
         playerData = new PlayerData();
         playerData.LoadData("highscore.txt");
         LoadLevel(startLevel);
@@ -40,8 +40,10 @@ public class MyGame : Game
         {
             DestroyAll();
             AddChild(new Level(levelToLoad));
-            if (currentLevel != "MainMenu.tmx" && currentLevel != "EndScreen.tmx")
+            if (currentLevel != "MainMenu.tmx")
                 AddChild(new HUD());
+            if (levelToLoad == "MainMenu.tmx")
+                playerData.ResetScore();
             levelToLoad = null;
         }
     }
@@ -49,10 +51,15 @@ public class MyGame : Game
     {
         if (backgroundMusicSC != null)
             backgroundMusicSC.Stop();
-        Sound backgroundMusic = new Sound(soundFile);
+        Sound backgroundMusic = new Sound(soundFile,true);
         backgroundMusicSC = backgroundMusic.Play();
+        backgroundMusicSC.Volume = 0.5f;
         levelToLoad = filename;
         currentLevel = filename;
+        if(levelToLoad == "EndScreen.tmx")
+        {
+            //hud.EndScreenUI();
+        }
         if (shouldResetPlayerData)
             playerData.Reset();
     }
